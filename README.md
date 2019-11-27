@@ -6,11 +6,11 @@ The version of this package will match the version of VS Code releases it contai
 
 ## Releasing
 
-Ensure `version`, `dependencies` and `devDependencies` from package.json match the specific release of VS Code we want to publish.
+VS Code source is found at [microsoft/vscode](https://github.com/microsoft/vscode).
 
-[microsoft/vscode](https://github.com/microsoft/vscode)
+In our package.json set `version` to target version of VS Code release. Example: 1.40.2
 
-For example, to publish version 1.33.1 ensure our package.json has this version, along with the same dependencies from package.json in
-[vscode 1.33.1 package.json](https://github.com/microsoft/vscode/blob/1.33.1/package.json).
+Find that release's package.json e.g. [vscode 1.40.2 package.json](https://github.com/microsoft/vscode/blob/1.40.2/package.json)
+and copy its `dependencies` and `devDependencies` into our own package.json (overwriting whatever we had before).
 
-Then run `npm run clean` and `npm publish`
+Then `npm publish` should clean, download and do the necessary packaging.
