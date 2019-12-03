@@ -13,7 +13,7 @@
 set -e
 
 ROOT_DIR=`pwd`
-DOWNLOAD_VERSION=$(jq ".version" package.json | cut -d "\"" -f 2)
+DOWNLOAD_VERSION=$(jq ".version" package.json | cut -d "\"" -f 2 | cut -d "-" -f 1)
 DOWNLOAD_BUILD=stable
 
 # Example download URLs:
