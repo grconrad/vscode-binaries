@@ -1,4 +1,12 @@
+# Lockfile doesn't come into play in this project because we don't need node_modules at all
 node_modules
+yarn.lock
+
+# Build output (gets published but not in source control)
 bin
+
 .DS_Store
+
 *-vscode-binaries-*.tgz
+
+ISSUES.md
