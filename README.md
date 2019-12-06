@@ -15,13 +15,18 @@ exist behind a firewall where outbound network access is limited to internal end
 private artifact repositories.
 
 This project allows VS Code binaries to be brought into such an environment, with relevant
-dependencies mentioned in package.json so that package scanners can do their job properly (checking
-for licenses, security vulnerabilities, etc.) and projects that build VS Code extensions can get the
-needed VS Code binary.
+dependencies mentioned as `devDependencies` in package.json so that package scanners can do their
+job properly (checking for licenses, security vulnerabilities, etc.) and projects that build VS Code
+extensions can get the needed VS Code binary.
 
 ## Consuming
 
-Point to the binary inside bin/linux-x64 or bin/darwin when using [vscode-test](https://github.com/microsoft/vscode-test).
+Consume this package as a dev dependency (add it to `devDependencies`). When this package is
+installed, its postinstall script extracts the appropriate binary based on the client platform.
+
+Point to the binary inside bin/linux-x64 or bin/darwin when using [vscode-test](https://github.com/microsoft/vscode-test)
+to run your extension integration tests.
+
 Example:
 
 ```js
@@ -47,12 +52,12 @@ a Mac or Linux x64 box.
 
 To build and publish a new version, do the following:
 
-1. In package.json set `version` to target version of VS Code release (example: 1.39.2)
-2. In vscode repo find that version tag, locate package.json (e.g. [here](https://github.com/microsoft/vscode/blob/1.39.2/package.json)),
-then copy its `dependencies` and `devDependencies` into our package.json (overwriting previous dep's)
-3. Run `npm publish` (or use `--dry-run` to see what would be published)
+1. Set version. In package.json set `version` to target version of VS Code release (example: 1.39.2)
+2. Clear out dependencies. In package.json clear out `dependencies` and `devDependencies`
+3. Specify dependencies as dev dependencies. In vscode repo find the version tag, locate package.json (e.g. [here](https://github.com/microsoft/vscode/blob/1.39.2/package.json)),
+and copy all of its `dependencies` and `devDependencies` into our package.json `devDependencies`
+(overwrite)
+4. Alphabetize. `npx sort-package-json`
+5. Download the binaries. `npm build`
+6. Publish. `npm publish` (use `--dry-run` to see what would be published)
 
-The prepublish script downloads binaries for Mac and Linux x64.
-
-When this package is installed, its postinstall script extracts the appropriate binary based on the
-client platform.
