@@ -1,6 +1,6 @@
 {
   "name": "@grconrad/vscode-binaries",
-  "version": "1.39.2-beta.5-all-deps-dev",
+  "version": "1.39.2-beta.6",
   "description": "Wrapper of VS Code binaries",
   "repository": "https://github.com/grconrad/vscode-binaries",
   "license": "MIT",
@@ -10,8 +10,8 @@
     "scripts/postinstall.sh"
   ],
   "scripts": {
-    "clean": "rm -rf ./bin",
     "build": "npm run clean && ./scripts/download-all.sh",
+    "clean": "rm -rf ./bin",
     "postinstall": "./scripts/postinstall.sh"
   },
   "devDependencies": {
