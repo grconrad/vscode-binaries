@@ -54,9 +54,9 @@ To build and publish a new version, do the following:
 
 1. Set version. In package.json set `version` to target version of VS Code release (example: 1.39.2)
 1. Clear out dependencies. In package.json remove everything from `dependencies` and `devDependencies`
-1. Specify dependencies as dev dependencies. In vscode repo find the version tag, locate package.json (e.g. [here](https://github.com/microsoft/vscode/blob/1.39.2/package.json)),
-and copy all of its `dependencies` and `devDependencies` into our package.json `devDependencies`
-(overwrite)
+1. Specify dependencies as dev dependencies. In vscode repo find the version tag, locate package.json
+(e.g. [here](https://github.com/microsoft/vscode/blob/1.39.2/package.json)), and copy all of its
+`dependencies` and `devDependencies` into our package.json `devDependencies` (overwrite)
 1. Alphabetize. `npx sort-package-json`
 1. Download the binaries. `npm run build`
 1. Publish. `npm publish` (use `--dry-run` to see what would be published)

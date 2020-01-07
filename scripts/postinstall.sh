@@ -20,8 +20,10 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   cd $ROOT_DIR/bin/darwin
   BUNDLEFILE=VSCode-darwin.zip
   if [[ -f "$BUNDLEFILE" ]]; then
-    echo "Unzipping $BUNDLEFILE"
-    unzip $BUNDLEFILE
+    if [[ ! -d "Visual Studio Code.app" ]]; then
+      echo "Unzipping $BUNDLEFILE"
+      unzip $BUNDLEFILE
+    fi
     rm -f $BUNDLEFILE
   fi
 else
