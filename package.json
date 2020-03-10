@@ -1,6 +1,6 @@
 {
   "name": "@grconrad/vscode-binaries",
-  "version": "1.42.0",
+  "version": "1.43.0",
   "description": "Wrapper of VS Code binaries",
   "repository": "https://github.com/grconrad/vscode-binaries",
   "license": "MIT",
