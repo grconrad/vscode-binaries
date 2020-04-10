@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+const fsExtra = require("fs-extra");
+const pkgPath = require("pkg-up");
+const got = require("got");
+
+// Validate command line args
+// A single arg is required and is assumed to be the vscode version
+const targetVersion = process.argv[2];
+console.log(`Parsed version=${targetVersion}`);
+
+(async () => {
+
+  // Make sure we can download package.json on github for this version of vscode
+  const vscodeReleasePkgJsonUrl = `https://raw.githubusercontent.com/microsoft/vscode/${targetVersion}/package.json`;
+  let vscodeReleasePkgJson;
+  try {
+    vscodeReleasePkgJson = await got(vscodeReleasePkgJsonUrl).json();
+  } catch (err) {
+    console.log(`Unable to find VS Code release ${targetVersion} package.json file at ${url}`, err);
+    process.exit(1);
+  }
+  console.log(`Found VS Code release ${targetVersion} package.json`, vscodeReleasePkgJson);
+
+  // Locate our package.json
+  const pkgJsonPath = pkgPath.sync();
+  console.log(`Reading package.json from ${pkgJsonPath}`);
+
+  // Read it into memory
+  const pkgJson = fsExtra.readJSONSync(pkgJsonPath);
+
+  // Remove dependencies, if any
+  delete pkgJson.dependencies;
+
+  // Write our package.json with changes
+  fsExtra.writeJsonSync(
+    pkgJsonPath,
+    {
+      // Keep whatever we had before
+      ...pkgJson,
+
+      // Change the version
+      version: targetVersion,
+
+      // Merge vscode's dependencies and devDependencies together into our devDependencies
+      // This overwrites our prior devDependencies
+      devDependencies: {
+        ...vscodeReleasePkgJson.devDependencies,
+        ...vscodeReleasePkgJson.dependencies,
+      }
+    },
+    {
+      spaces: 2,
+    },
+  );
+})();

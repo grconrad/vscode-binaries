@@ -48,15 +48,36 @@ for more context.)
 This setup should allow running vscode-test based integration tests of a VS Code extension on either
 a Mac or Linux x64 box.
 
-## Building and releasing
+## Build
 
-To build and publish a new version, do the following:
+To build a new version there are two options.
 
-1. Set version. In package.json set `version` to target version of VS Code release (example: 1.39.2)
-1. Clear out dependencies. In package.json remove everything from `dependencies` and `devDependencies`
-1. Specify dependencies as dev dependencies. In vscode repo find the version tag, locate package.json
-(e.g. [here](https://github.com/microsoft/vscode/blob/1.39.2/package.json)), and copy all of its
-`dependencies` and `devDependencies` into our package.json `devDependencies` (overwrite)
+**Option 1: Script**
+
+Run the build script with the target VS Code release version number, e.g.
+
+```sh
+./scripts/build-new-version.sh 1.44.0
+```
+
+This downloads the vscode project's package.json (matching the release version you specified); sets
+our package.json to have the same version; takes vscode's devDependencies and dependencies, merges
+them, and writes to our devDependencies; sorts our resulting package.json; then downloads the
+corresponding VS Code release binaries from the public download site.
+
+**Option 2: Manual process**
+
+1. **Set the version**
+   1. Choose the target version (usually the latest released version of VS Code makes sense).
+   1. In package.json set `version` to target version of VS Code release (example: 1.44.0)
+1. **Set the dependencies** as devDependencies
+   1. In package.json remove everything from `dependencies` and `devDependencies`.
+   1. In vscode repo find the version tag, locate package.json
+(e.g. [here](https://github.com/microsoft/vscode/blob/1.44.0/package.json)), and copy all of its
+`dependencies` and `devDependencies` into our package.json `devDependencies` (overwrite).
 1. Alphabetize. `npx sort-package-json`
 1. Download the binaries. `npm run build`
-1. Publish. `npm publish` (use `--dry-run` to see what would be published)
+
+## Publish
+
+`npm publish` (use `--dry-run` to see what would be published)
