@@ -14,7 +14,7 @@ fi
 
 # Install these (required by the node script) without writing them as dependencies to package.json
 echo "Installing things needed by update script..."
-npm install --no-save fs-extra pkg-up got
+npm install --no-save fs-extra pkg-up@3 got@11
 
 # Update version and dependencies in package.json
 echo "Running update script..."
